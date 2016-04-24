@@ -28,18 +28,20 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 	JCheckBox ExtraCheeseBox = new JCheckBox("Extra Cheese", false);        
 	JCheckBox pepperoni = new JCheckBox("Pepperoni", false);        
 	JCheckBox sausage = new JCheckBox("Sausage", false);        
-	JCheckBox ham = new JCheckBox("Ground Beef", false);        
-      
-	      
+	JCheckBox ham = new JCheckBox("Ground Beef", false);     
+	
+	String[] pizzaSize = { "Small", "Medium", "Large",
+	"Extra-Large" };        
+	JComboBox sizeChoice = new JComboBox(pizzaSize);     
+
+
 	JLabel priceLabel = new JLabel("Total Price");        
 	JTextField price = new JTextField(10);
 
 	public Test() {
 
 		super("pizza");        
-		String[] pizzaSize = { "Small", "Medium", "Large",
-		"Extra-Large" };        
-		JComboBox sizeChoice = new JComboBox(pizzaSize);        
+		   
 		sizeChoice.addActionListener(this);        
 		price.addActionListener(this);        
 		title.setBounds(0, 10, 1350, 50);
@@ -65,7 +67,7 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 		priceLabel.setBounds(1170, 615, 100, 100);
 
 		add(price);
-		price.setBounds(1250,650, 70, 30 );
+		price.setBounds(1250,650, 80, 30 );
 
 
 		pepperoni.addItemListener(this);
@@ -94,7 +96,7 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 	public void actionPerformed(ActionEvent e) {
 		JComboBox decide = (JComboBox) e.getSource();
 		String pizzaSize = (String) decide.getSelectedItem();    
-		
+
 		System.out.println(pizzaSize);    
 		if (pizzaSize.equals("Small"))
 			Price = base;    
@@ -105,41 +107,56 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 		else
 			Price = base + 7;    
 		System.out.println(Price);
+
+		
 		
 		NumberFormat currency = NumberFormat.getCurrencyInstance();
-		String priceFormatted = currency.format(Price);
-		price.setText(priceFormatted);
+		String sizePriceFormatted = currency.format(Price);
+		
+		price.setText(sizePriceFormatted);
 	}
 
 	public void itemStateChanged(ItemEvent event) {
 		Object source = event.getSource();
 		int select = event.getStateChange();    
-		if (source == ExtraCheeseBox) {
-			if (select == ItemEvent.SELECTED) {
-				toppings += 1;
-			} else
-				toppings -= 1;
-		} else if (source == pepperoni) {
-			if (select == ItemEvent.SELECTED)
-				toppings += 1.00;
-			else
-				toppings -= 1.00;
-		} else if (source == sausage) {
-			if (select == ItemEvent.SELECTED)
-				toppings += 1.00;
-			else
-				toppings -= 1.00;
-		} else if (source == ham) {
-			if (select == ItemEvent.SELECTED)
-				toppings += 1.00;
-			else
-				toppings -= 1.00;
+
+
 		
-		
-		} else if (select == ItemEvent.SELECTED)
-			toppings += 1.00;
-		else
-			toppings -= 1.00;
-		price.setText("$ " + toppings);
+
+			if (source == ExtraCheeseBox) {
+				if (select == ItemEvent.SELECTED) {
+					toppings += 1;
+				} else
+					toppings -= 1;
+			} else if (source == pepperoni) {
+				if (select == ItemEvent.SELECTED)
+					toppings += 1.00;
+				else
+					toppings -= 1.00;
+			} else if (source == sausage) {
+				if (select == ItemEvent.SELECTED)
+					toppings += 1.00;
+				else
+					toppings -= 1.00;
+			} else if (source == ham) {
+				if (select == ItemEvent.SELECTED)
+					toppings += 1.00;
+				else
+					toppings -= 1.00;
+
+
+			} else if (select == ItemEvent.SELECTED)
+				toppings += 1.00;
+			else
+				toppings -= 1.00;
+			
+			double totalPrice = toppings + Price;
+			
+			NumberFormat currency = NumberFormat.getCurrencyInstance();
+			String priceFormatted = currency.format(totalPrice);
+			price.setText(priceFormatted);
+			
+			System.out.println(toppings + Price);
+		}
 	}
-}
+
