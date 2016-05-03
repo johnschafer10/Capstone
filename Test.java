@@ -14,9 +14,10 @@ import java.text.NumberFormat;
 import javax.swing.*;
 
 public class Test extends JFrame implements ActionListener, ItemListener {
-	private double Price;
+	double Price;
 	double base = 7;
 	double toppings;
+	double sizeToppings;
 
 	Font headlineFont = new Font("Courier", Font.BOLD, 50);        
 	Font sizeFont = new Font("Courier", Font.BOLD, 25);        
@@ -25,11 +26,15 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 	JLabel title = new JLabel("PizzaPizzaPizzaPizza");        
 	JLabel sizeText = new JLabel("Please select the size of pizza?");        
 	JLabel toppingText = new JLabel("What would you like on your pizza?");        
-	JCheckBox ExtraCheeseBox = new JCheckBox("Extra Cheese", false);        
+
+	JCheckBox extraCheese= new JCheckBox("Extra Cheese", false);        
 	JCheckBox pepperoni = new JCheckBox("Pepperoni", false);        
 	JCheckBox sausage = new JCheckBox("Sausage", false);        
 	JCheckBox ham = new JCheckBox("Ground Beef", false);     
-	
+	JCheckBox onions = new JCheckBox("Onions", false);
+	JCheckBox bacon = new JCheckBox("Bacon" , false);
+
+
 	String[] pizzaSize = { "Small", "Medium", "Large",
 	"Extra-Large" };        
 	JComboBox sizeChoice = new JComboBox(pizzaSize);     
@@ -38,10 +43,11 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 	JLabel priceLabel = new JLabel("Total Price");        
 	JTextField price = new JTextField(10);
 
+
 	public Test() {
 
 		super("pizza");        
-		   
+
 		sizeChoice.addActionListener(this);        
 		price.addActionListener(this);        
 		title.setBounds(0, 10, 1350, 50);
@@ -62,6 +68,12 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 		sausage.setBounds(130, 200, 100, 100);
 		add(ham);
 		ham.setBounds(240, 200, 100, 100);
+		add(bacon);
+		bacon.setBounds(350, 200, 100, 100);
+		add(extraCheese);
+		extraCheese.setBounds(460, 200, 110,100);
+		add(onions);
+		onions.setBounds(570, 200, 100, 100);
 
 		add(priceLabel);
 		priceLabel.setBounds(1170, 615, 100, 100);
@@ -73,6 +85,9 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 		pepperoni.addItemListener(this);
 		sausage.addItemListener(this);
 		ham.addItemListener(this);
+		bacon.addItemListener(this);
+		onions.addItemListener(this);
+		extraCheese.addItemListener(this);
 
 		title.setFont(headlineFont);
 		sizeText.setFont(sizeFont);
@@ -98,22 +113,29 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 		String pizzaSize = (String) decide.getSelectedItem();    
 
 		System.out.println(pizzaSize);    
-		if (pizzaSize.equals("Small"))
-			Price = base;    
-		else if (pizzaSize.equals("Medium"))
-			Price = base + 2;    
-		else if (pizzaSize.equals("Large"))
+		if (pizzaSize.equals("Small")){
+			Price = base;   
+			sizeToppings = .25;
+			System.out.println(toppings);
+		}else if (pizzaSize.equals("Medium")){
+			Price = base + 2;   
+			sizeToppings = .5;
+		}else if (pizzaSize.equals("Large")){
 			Price = base + 4;    
-		else
-			Price = base + 7;    
-		System.out.println(Price);
+			sizeToppings = .75;
+		}else{
+			Price = base + 7;  
+			sizeToppings = 1;
+			System.out.println(Price);
+			System.out.println(toppings);
 
-		
-		
+		}
+
 		NumberFormat currency = NumberFormat.getCurrencyInstance();
 		String sizePriceFormatted = currency.format(Price);
-		
+
 		price.setText(sizePriceFormatted);
+		price.setEditable(false);
 	}
 
 	public void itemStateChanged(ItemEvent event) {
@@ -121,42 +143,56 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 		int select = event.getStateChange();    
 
 
-		
-
-			if (source == ExtraCheeseBox) {
-				if (select == ItemEvent.SELECTED) {
-					toppings += 1;
-				} else
-					toppings -= 1;
-			} else if (source == pepperoni) {
-				if (select == ItemEvent.SELECTED)
-					toppings += 1.00;
-				else
-					toppings -= 1.00;
-			} else if (source == sausage) {
-				if (select == ItemEvent.SELECTED)
-					toppings += 1.00;
-				else
-					toppings -= 1.00;
-			} else if (source == ham) {
-				if (select == ItemEvent.SELECTED)
-					toppings += 1.00;
-				else
-					toppings -= 1.00;
 
 
-			} else if (select == ItemEvent.SELECTED)
-				toppings += 1.00;
+		if (source == extraCheese) {
+			if (select == ItemEvent.SELECTED) {
+				toppings += 1;
+
+			} else
+				toppings -= 1;
+		} else if (source == pepperoni) {
+			if (select == ItemEvent.SELECTED)
+				toppings += sizeToppings;
 			else
-				toppings -= 1.00;
-			
-			double totalPrice = toppings + Price;
-			
-			NumberFormat currency = NumberFormat.getCurrencyInstance();
-			String priceFormatted = currency.format(totalPrice);
-			price.setText(priceFormatted);
-			
-			System.out.println(toppings + Price);
-		}
+				toppings -= sizeToppings;
+		
+		} else if (source == bacon) {
+			if (select == ItemEvent.SELECTED)
+				toppings += sizeToppings;
+			else
+				toppings -= sizeToppings;
+		
+		} else if (source == onions) {
+			if (select == ItemEvent.SELECTED)
+				toppings += sizeToppings;
+			else
+				toppings -= sizeToppings;
+		} else if (source == sausage) {
+			if (select == ItemEvent.SELECTED)
+				toppings += sizeToppings;
+			else
+				toppings -= sizeToppings;
+		} else if (source == ham) {
+			if (select == ItemEvent.SELECTED)
+				toppings += sizeToppings;
+			else
+				toppings -= sizeToppings;
+
+
+		} else if (select == ItemEvent.SELECTED)
+			toppings += sizeToppings;
+		else
+			toppings -= sizeToppings;
+
+		double totalPrice = toppings + Price;
+
+		NumberFormat currency = NumberFormat.getCurrencyInstance();
+		String priceFormatted = currency.format(totalPrice);
+		price.setText(priceFormatted);
+
+		System.out.println(toppings + Price);
+		price.setEditable(false);
 	}
+}
 
