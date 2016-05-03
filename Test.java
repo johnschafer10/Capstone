@@ -21,11 +21,11 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 
 	Font headlineFont = new Font("Courier", Font.BOLD, 50);        
 	Font sizeFont = new Font("Courier", Font.BOLD, 25);        
-	Font toppingFont = new Font("Courier", Font.BOLD, 15);        
+	Font toppingFont = new Font("Courier", Font.BOLD, 20);        
 	Font priceFont = new Font("Courier", Font.BOLD, 20);        
 	JLabel title = new JLabel("PizzaPizzaPizzaPizza");        
-	JLabel sizeText = new JLabel("Please select the size of pizza?");        
-	JLabel toppingText = new JLabel("What would you like on your pizza?");        
+	JLabel sizeText = new JLabel("Please select the size of your pizza:");        
+	JLabel toppingText = new JLabel("What toppings would you like on your pizza?");        
 
 	JCheckBox extraCheese= new JCheckBox("Extra Cheese", false);        
 	JCheckBox pepperoni = new JCheckBox("Pepperoni", false);        
@@ -53,9 +53,11 @@ public class Test extends JFrame implements ActionListener, ItemListener {
 		title.setBounds(0, 10, 1350, 50);
 		add(title);
 		add(sizeChoice);
-		sizeChoice.setBounds(270, 120, 100, 20);
+		sizeChoice.setBounds(570, 120, 100, 20);
 		add(sizeText);
-		sizeText.setBounds(10, 50, 300,150);
+		sizeText.setBounds(10, 50, 600,150);
+		add(toppingText);
+		toppingText.setBounds(10,140,600,150);
 
 
 		add(toppingText);
